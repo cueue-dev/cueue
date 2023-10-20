@@ -1,0 +1,42 @@
+{
+	"name": "@cueue/core",
+	"description": "",
+	"version": "0.0.0",
+	"author": "JacobLinCool <jacoblincool@gmail.com> (https://jacoblin.cool)",
+	"license": "MIT",
+	"keywords": [],
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		"import": "./dist/index.js",
+		"require": "./dist/index.js",
+		"default": "./dist/index.js",
+		"types": "./dist/index.d.ts"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsup",
+		"build:docs": "typedoc --out docs src"
+	},
+	"devDependencies": {
+		"@types/debug": "^4.1.10",
+		"tsup": "^7.2.0",
+		"typedoc": "^0.25.2",
+		"typescript": "^5.2.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cueue-dev/cueue.git"
+	},
+	"bugs": {
+		"url": "https://github.com/cueue-dev/cueue/issues"
+	},
+	"homepage": "https://cueue-dev.github.io/",
+	"dependencies": {
+		"debug": "^4.3.4",
+		"zod": "^3.22.4"
+	}
+}

@@ -1,0 +1,39 @@
+name = "cueue-cloudflare-queues-example"
+main = "src/index.ts"
+compatibility_date = "2023-10-16"
+
+usage_model = "bundled"
+
+# [vars]
+# DISCORD_WEBHOOK (secret)
+
+[[r2_buckets]]
+binding = "r2"
+bucket_name = "cueue-example-images"
+
+[[queues.producers]]
+binding = "crawl"
+queue = "cueue-crawl-queue"
+
+[[queues.producers]]
+binding = "save"
+queue = "cueue-save-queue"
+
+[[queues.producers]]
+binding = "notify"
+queue = "cueue-notify-queue"
+
+[[queues.consumers]]
+queue = "cueue-crawl-queue"
+max_batch_timeout = 3
+dead_letter_queue = "cueue-crawl-queue-dlq"
+
+[[queues.consumers]]
+queue = "cueue-save-queue"
+max_batch_timeout = 3
+dead_letter_queue = "cueue-save-queue-dlq"
+
+[[queues.consumers]]
+queue = "cueue-notify-queue"
+max_batch_timeout = 3
+dead_letter_queue = "cueue-notify-queue-dlq"
