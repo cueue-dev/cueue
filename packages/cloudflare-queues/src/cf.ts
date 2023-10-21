@@ -1,5 +1,5 @@
 import type { Queue as CloudflareQueue, MessageBatch } from "@cloudflare/workers-types";
-import type { Middleware, Queue, RunOptions } from "@cueue/core";
+import type { Context, Middleware, Queue, RunOptions } from "@cueue/core";
 import { Cueue } from "@cueue/core";
 
 export class CloudflareCueue extends Cueue {
@@ -9,13 +9,13 @@ export class CloudflareCueue extends Cueue {
 	 * @param cloudflare_queue The Cloudflare queue.
 	 * @param middleware The middleware to use.
 	 */
-	use<T>(
+	use<T extends Context>(
 		queue_name: string,
 		cloudflare_queue: CloudflareQueue<T>,
 		middleware: Middleware<T>,
 	): this;
-	use<T>(queue: Queue<T>, middleware: Middleware<T>): this;
-	use<T>(
+	use<T extends Context>(queue: Queue<T>, middleware: Middleware<T>): this;
+	use<T extends Context>(
 		name_queue: string | Queue<T>,
 		queue_middleware: CloudflareQueue<T> | Middleware<T>,
 		middleware?: Middleware<T>,
@@ -58,7 +58,10 @@ export class CloudflareCueue extends Cueue {
 		}
 	}
 
-	public async take(batch: MessageBatch<unknown>, opts: Record<string, RunOptions> = {}) {
+	public async take<T extends Context>(
+		batch: MessageBatch<T>,
+		opts: Record<string, RunOptions> = {},
+	) {
 		const from = batch.queue;
 
 		const queue = this.queues.get(from);
@@ -68,7 +71,7 @@ export class CloudflareCueue extends Cueue {
 		}
 
 		for (const message of batch.messages) {
-			await this.run(from, message.body, opts[from] || {});
+			await this.forward(from, message.body, opts[from] || {});
 			message.ack();
 		}
 	}

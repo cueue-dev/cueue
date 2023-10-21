@@ -1,24 +1,22 @@
 import type { z } from "zod";
 
-export interface Queue<T = unknown> {
+export type Context = Record<string, unknown>;
+
+export interface Queue<T = Context> {
 	name: string;
 	send(...messages: T[]): Promise<void>;
 }
 
-export type MiddlewareExec<Input = unknown, Output = unknown> = (
+export type MiddlewareExec<Input = Context, Output extends Context = Context> = (
 	context: Input,
 	next: (...ctx: Output[]) => Promise<void>,
+	forward: (step: string | number, context: Context) => Promise<string | null>,
 ) => Promise<void> | void;
 
-export interface Middleware<T = unknown> {
+export interface Middleware<T = Context> {
 	/** The schema for the context object. */
 	schema: z.ZodSchema<T>;
 	exec: MiddlewareExec<T>;
-	/** Should this middleware be executed immediately after the previous middleware, or being added to the queue? */
-	immediate?: boolean;
 }
 
-export interface RunOptions {
-	/** Force the middlewares to be executed immediately, even if they are not marked as immediate. */
-	immediate?: boolean;
-}
+export interface RunOptions {}
