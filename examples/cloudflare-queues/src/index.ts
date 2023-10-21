@@ -1,9 +1,12 @@
 /**
  * This is an example of how to use Cueue with Cloudflare Queues to
- * download images from a URL and save them to R2.
+ * download images from a URL and save them to R2, then send a Discord
+ * message with the image.
  */
 
+import type { MessageBatch } from "@cloudflare/workers-types";
 import { CloudflareCueue } from "@cueue/cloudflare-queues";
+import type { Context } from "@cueue/core";
 import debug from "debug";
 import { crawler } from "./crawler";
 import { discord } from "./discord";
@@ -36,7 +39,7 @@ export default {
 		await build(env).begin({ url });
 		return new Response("OK");
 	},
-	async queue(batch: MessageBatch<Error>, env: Env): Promise<void> {
+	async queue(batch: MessageBatch<Context>, env: Env): Promise<void> {
 		await build(env).take(batch);
 	},
 };
