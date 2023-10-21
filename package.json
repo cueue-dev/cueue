@@ -38,5 +38,6 @@
 	"bugs": {
 		"url": "https://github.com/cueue-dev/cueue/issues"
 	},
-	"homepage": "https://cueue-dev.github.io/"
+	"homepage": "https://cueue-dev.github.io/",
+	"packageManager": "pnpm@8.9.2"
 }
