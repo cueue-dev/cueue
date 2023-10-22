@@ -1,0 +1,40 @@
+name = "cueue-cloudflare-queues-email-example"
+main = "src/index.ts"
+compatibility_date = "2023-10-16"
+
+usage_model = "unbound"
+
+[ai]
+binding = "AI"
+
+# Optional
+[[r2_buckets]]
+binding = "r2"
+bucket_name = "cueue-email-files"
+
+[[queues.producers]]
+binding = "parse"
+queue = "cueue-email-parse-queue"
+
+[[queues.producers]]
+binding = "analyze"
+queue = "cueue-email-analyze-queue"
+
+[[queues.producers]]
+binding = "send"
+queue = "cueue-email-send-queue"
+
+[[queues.consumers]]
+queue = "cueue-email-parse-queue"
+max_batch_timeout = 3
+dead_letter_queue = "cueue-email-parse-queue-dlq"
+
+[[queues.consumers]]
+queue = "cueue-email-analyze-queue"
+max_batch_timeout = 3
+dead_letter_queue = "cueue-email-analyze-queue-dlq"
+
+[[queues.consumers]]
+queue = "cueue-email-send-queue"
+max_batch_timeout = 3
+dead_letter_queue = "cueue-email-send-queue-dlq"
