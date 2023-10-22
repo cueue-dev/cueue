@@ -1,8 +1,8 @@
-import type { Middleware } from "@cueue/core";
+import type { Consumer } from "@cueue/core";
 import { z } from "zod";
 import type { Env } from "./types";
 
-export function crawler(env: Env): Middleware<{ url: string }> {
+export function crawler(env: Env): Consumer<{ url: string }> {
 	return {
 		schema: z.object({
 			url: z.string().url(),

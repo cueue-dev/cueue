@@ -1,8 +1,8 @@
-import type { Middleware } from "@cueue/core";
+import type { Consumer } from "@cueue/core";
 import { z } from "zod";
 import type { Env } from "./types";
 
-export function saver(env: Env): Middleware<{ image: string }> {
+export function saver(env: Env): Consumer<{ image: string }> {
 	return {
 		schema: z.object({
 			image: z.string().url(),

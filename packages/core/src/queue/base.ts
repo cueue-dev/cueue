@@ -51,7 +51,7 @@ export class BaseQueue implements Queue {
 			await this.cueue.forward(this.name, message);
 		} catch (err) {
 			if (count < this.retry()) {
-				this.log(`Retrying message ${count + 1} of ${this.opt.retry}`);
+				this.log(`Retrying message ${count + 1} of ${this.retry()}`);
 				await this._send(message, count + 1);
 			} else {
 				this.log(`Message failed after ${count} retries`);

@@ -1,10 +1,10 @@
-import type { Middleware } from "@cueue/core";
+import type { Consumer } from "@cueue/core";
 import { z } from "zod";
 import type { Env } from "./types";
 
 export function discord(
 	env: Env,
-): Middleware<{ webhook: string; message: string; filename: string }> {
+): Consumer<{ webhook: string; message: string; filename: string }> {
 	return {
 		schema: z.object({
 			webhook: z.string(),

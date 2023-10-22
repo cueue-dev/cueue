@@ -75,6 +75,40 @@ importers:
                 specifier: ^3.0.0
                 version: 3.14.0
 
+    examples/cloudflare-queues-email:
+        dependencies:
+            "@cloudflare/ai":
+                specifier: ^1.0.22
+                version: 1.0.22
+            "@cueue/cloudflare-queues":
+                specifier: workspace:^
+                version: link:../../packages/cloudflare-queues
+            "@cueue/core":
+                specifier: workspace:^
+                version: link:../../packages/core
+            debug:
+                specifier: ^4.3.4
+                version: 4.3.4
+            postal-mime:
+                specifier: ^1.0.16
+                version: 1.0.16
+            zod:
+                specifier: ^3.22.4
+                version: 3.22.4
+        devDependencies:
+            "@cloudflare/workers-types":
+                specifier: ^4.20230419.0
+                version: 4.20231016.0
+            "@types/debug":
+                specifier: ^4.1.10
+                version: 4.1.10
+            typescript:
+                specifier: ^5.0.4
+                version: 5.2.2
+            wrangler:
+                specifier: ^3.0.0
+                version: 3.14.0
+
     packages/cloudflare-queues:
         dependencies:
             "@cueue/core":
@@ -419,6 +453,13 @@ packages:
             human-id: 1.0.2
             prettier: 2.8.3
         dev: true
+
+    /@cloudflare/ai@1.0.22:
+        resolution:
+            {
+                integrity: sha512-Juxzxr05ikVKaXGeeODq6ZrUFRWVCB9BJMYpoBEpNo105kGiISqpdFgREoV1HPZPYdkq9AHA2rXM/H+dQNWNFw==,
+            }
+        dev: false
 
     /@cloudflare/kv-asset-handler@0.2.0:
         resolution:
@@ -4123,6 +4164,13 @@ packages:
             mlly: 1.4.1
             pathe: 1.1.1
         dev: true
+
+    /postal-mime@1.0.16:
+        resolution:
+            {
+                integrity: sha512-DIpZ6HfV8GIGerAOui+Q3YEE9EZNK3sdZdH2yGVhbVsB7F6bbD3L4D+W2wch7aV+aOkY5EMjMuKYbRDQGdSQBA==,
+            }
+        dev: false
 
     /postcss-load-config@4.0.1:
         resolution:

@@ -1,28 +1,28 @@
 import type { Queue as CloudflareQueue, MessageBatch } from "@cloudflare/workers-types";
-import type { Context, Middleware, Queue, RunOptions } from "@cueue/core";
+import type { Consumer, Context, Queue, RunOptions } from "@cueue/core";
 import { Cueue } from "@cueue/core";
 
 export class CloudflareCueue extends Cueue {
 	/**
-	 * Add a middleware.
+	 * Add a consumer.
 	 * @param queue_name The name of the queue, must match the name of the queue in the Cloudflare dashboard.
 	 * @param cloudflare_queue The Cloudflare queue.
-	 * @param middleware The middleware to use.
+	 * @param consumer The consumer to use.
 	 */
 	use<T extends Context>(
 		queue_name: string,
 		cloudflare_queue: CloudflareQueue<T>,
-		middleware: Middleware<T>,
+		consumer: Consumer<T>,
 	): this;
-	use<T extends Context>(queue: Queue<T>, middleware: Middleware<T>): this;
+	use<T extends Context>(queue: Queue<T>, consumer: Consumer<T>): this;
 	use<T extends Context>(
 		name_queue: string | Queue<T>,
-		queue_middleware: CloudflareQueue<T> | Middleware<T>,
-		middleware?: Middleware<T>,
+		queue_consumer: CloudflareQueue<T> | Consumer<T>,
+		consumer?: Consumer<T>,
 	): this {
-		if (typeof name_queue !== "string" && "exec" in queue_middleware) {
-			return super.use(name_queue, queue_middleware);
-		} else if (typeof name_queue === "string" && "send" in queue_middleware && middleware) {
+		if (typeof name_queue !== "string" && "exec" in queue_consumer) {
+			return super.use(name_queue, queue_consumer);
+		} else if (typeof name_queue === "string" && "send" in queue_consumer && consumer) {
 			const queue: Queue<T> = {
 				name: name_queue,
 				send: async (...messages) => {
@@ -34,9 +34,9 @@ export class CloudflareCueue extends Cueue {
 						const m = messages[0];
 						const is_json = json_serializable(m);
 						if (is_json) {
-							return queue_middleware.send(m, { contentType: "json" });
+							return queue_consumer.send(m, { contentType: "json" });
 						} else {
-							return queue_middleware.send(m);
+							return queue_consumer.send(m);
 						}
 					} else {
 						const data = messages.map((m) => {
@@ -48,11 +48,11 @@ export class CloudflareCueue extends Cueue {
 							}
 						});
 
-						return queue_middleware.sendBatch(data);
+						return queue_consumer.sendBatch(data);
 					}
 				},
 			};
-			return super.use(queue, middleware);
+			return super.use(queue, consumer);
 		} else {
 			throw new Error("Invalid arguments");
 		}
