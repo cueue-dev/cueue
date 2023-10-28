@@ -1,3 +1,5 @@
+import type { ReadableStream } from "@cloudflare/workers-types";
+
 export async function stream2buffer(stream: ReadableStream, size: number): Promise<ArrayBuffer> {
 	const result = new Uint8Array(size);
 	const reader = stream.getReader();

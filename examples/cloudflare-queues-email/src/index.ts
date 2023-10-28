@@ -3,7 +3,7 @@
  * analyze and reply to emails with Cloudflare AI.
  */
 
-import type { MessageBatch } from "@cloudflare/workers-types";
+import type { ForwardableEmailMessage, MessageBatch } from "@cloudflare/workers-types";
 import { CloudflareCueue } from "@cueue/cloudflare-queues";
 import type { Context } from "@cueue/core";
 import debug from "debug";
