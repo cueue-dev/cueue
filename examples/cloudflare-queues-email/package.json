@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"name": "cloudflare-queues-email-example",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"scripts": {
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",

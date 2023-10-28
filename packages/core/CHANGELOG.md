@@ -1,5 +1,11 @@
 # @cueue/core
 
+## 0.0.2
+
+### Patch Changes
+
+-   [`545b0a3`](https://github.com/cueue-dev/cueue/commit/545b0a357ee68515d3314f8482f644c7583f7518) Thanks [@JacobLinCool](https://github.com/JacobLinCool)! - Rename `Middleware` to `Consumer`
+
 ## 0.0.1
 
 ### Patch Changes
